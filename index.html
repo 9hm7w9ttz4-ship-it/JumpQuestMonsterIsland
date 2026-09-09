@@ -6,7 +6,7 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>Jump Quest Monster Island</title>
 
@@ -16,17 +16,23 @@
 
   box-sizing: border-box;
 
+  margin: 0;
+
+  padding: 0;
+
 }
 
-body {
+html, body {
 
-  margin: 0;
+  width: 100%;
+
+  height: 100%;
 
   overflow: hidden;
 
-  background: linear-gradient(#55c8ff, #b8f0ff);
-
   font-family: Arial, sans-serif;
+
+  background: #55c8ff;
 
   touch-action: none;
 
@@ -44,185 +50,209 @@ body {
 
 }
 
-#player {
+canvas {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+}
+
+#menu,
+
+#gameOver,
+
+#winScreen {
 
   position: absolute;
 
-  width: 50px;
+  inset: 0;
 
-  height: 50px;
+  display: flex;
 
-  background: #ffcc33;
+  flex-direction: column;
 
-  border: 4px solid #222;
+  justify-content: center;
 
-  border-radius: 50%;
+  align-items: center;
 
-  left: 80px;
-
-  bottom: 120px;
-
-  z-index: 5;
-
-}
-
-.platform {
-
-  position: absolute;
-
-  height: 25px;
-
-  background: #38a852;
-
-  border: 4px solid #185c2a;
-
-  border-radius: 12px;
-
-}
-
-#platform1 {
-
-  width: 180px;
-
-  left: 20px;
-
-  bottom: 80px;
-
-}
-
-#platform2 {
-
-  width: 150px;
-
-  left: 260px;
-
-  bottom: 190px;
-
-}
-
-#platform3 {
-
-  width: 170px;
-
-  left: 500px;
-
-  bottom: 300px;
-
-}
-
-.monster {
-
-  position: absolute;
-
-  width: 55px;
-
-  height: 55px;
-
-  background: #9b59ff;
-
-  border: 4px solid #35145e;
-
-  border-radius: 40% 40% 50% 50%;
-
-  bottom: 105px;
-
-  left: 430px;
-
-}
-
-.eye {
-
-  position: absolute;
-
-  width: 12px;
-
-  height: 12px;
-
-  background: white;
-
-  border: 2px solid #111;
-
-  border-radius: 50%;
-
-  top: 12px;
-
-}
-
-.eye.left {
-
-  left: 10px;
-
-}
-
-.eye.right {
-
-  right: 10px;
-
-}
-
-#score {
-
-  position: absolute;
-
-  top: 20px;
-
-  left: 20px;
-
-  font-size: 24px;
-
-  font-weight: bold;
-
-  color: white;
-
-  text-shadow: 2px 2px #222;
+  background: linear-gradient(#45b9ff, #8ee7ff);
 
   z-index: 10;
 
-}
+  text-align: center;
 
-#message {
-
-  position: absolute;
-
-  top: 55px;
-
-  left: 20px;
-
-  font-size: 18px;
-
-  color: white;
-
-  text-shadow: 2px 2px #222;
-
-  z-index: 10;
+  padding: 20px;
 
 }
 
-#jump {
+#menu h1,
 
-  position: absolute;
+#gameOver h1,
 
-  right: 25px;
+#winScreen h1 {
 
-  bottom: 30px;
-
-  width: 100px;
-
-  height: 100px;
-
-  border-radius: 50%;
-
-  border: 5px solid white;
-
-  background: #ff7043;
+  font-size: 38px;
 
   color: white;
+
+  text-shadow: 0 4px 0 #2672a8;
+
+  margin-bottom: 15px;
+
+}
+
+#menu p,
+
+#gameOver p,
+
+#winScreen p {
+
+  color: white;
+
+  font-size: 20px;
+
+  margin: 8px;
+
+  text-shadow: 0 2px 2px #2672a8;
+
+}
+
+button {
+
+  border: none;
+
+  border-radius: 18px;
+
+  padding: 16px 30px;
+
+  margin-top: 20px;
 
   font-size: 22px;
 
   font-weight: bold;
 
-  z-index: 20;
+  color: white;
+
+  background: #ff8c00;
+
+  box-shadow: 0 5px 0 #bd5d00;
+
+}
+
+button:active {
+
+  transform: translateY(4px);
+
+  box-shadow: 0 1px 0 #bd5d00;
+
+}
+
+#hud {
+
+  position: absolute;
+
+  top: 12px;
+
+  left: 12px;
+
+  right: 12px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  color: white;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  text-shadow: 0 2px 3px #333;
+
+  z-index: 5;
+
+  pointer-events: none;
+
+}
+
+#controls {
+
+  position: absolute;
+
+  left: 0;
+
+  right: 0;
+
+  bottom: 18px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 0 18px;
+
+  z-index: 6;
+
+  pointer-events: none;
+
+}
+
+.controlGroup {
+
+  display: flex;
+
+  gap: 12px;
+
+}
+
+.control {
+
+  width: 72px;
+
+  height: 72px;
+
+  border-radius: 50%;
+
+  border: 2px solid rgba(255,255,255,.7);
+
+  background: rgba(30,60,90,.55);
+
+  color: white;
+
+  font-size: 30px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  pointer-events: auto;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+}
+
+.jump {
+
+  width: 90px;
+
+  height: 90px;
+
+  background: rgba(255,120,0,.75);
+
+  font-size: 20px;
+
+}
+
+.hidden {
+
+  display: none !important;
 
 }
 
@@ -234,95 +264,1215 @@ body {
 
 <div id="game">
 
-  <div id="score">⭐ 0</div>
+<canvas id="canvas"></canvas>
 
-  <div id="message">Прыгай и собирай монеты!</div>
+<div id="hud" class="hidden">
 
-  <div id="player"></div>
+  <div id="levelText">🏝️ Level 1</div>
 
-  <div id="platform1" class="platform"></div>
+  <div id="scoreText">⭐ 0</div>
 
-  <div id="platform2" class="platform"></div>
+  <div id="livesText">❤️❤️❤️</div>
 
-  <div id="platform3" class="platform"></div>
+</div>
 
-  <div class="monster">
+<div id="controls" class="hidden">
 
-    <div class="eye left"></div>
+  <div class="controlGroup">
 
-    <div class="eye right"></div>
+    <div class="control" id="left">◀</div>
+
+    <div class="control" id="right">▶</div>
 
   </div>
 
-  <button id="jump">JUMP</button>
+  <div class="control jump" id="jump">JUMP</div>
+
+</div>
+
+<div id="menu">
+
+  <h1>🏝️ Monster Island</h1>
+
+  <p>🎮 Jump Quest</p>
+
+  <p>Собирай монеты и побеждай монстров!</p>
+
+  <button id="startButton">▶ НАЧАТЬ ИГРУ</button>
+
+</div>
+
+<div id="gameOver" class="hidden">
+
+  <h1>💀 GAME OVER</h1>
+
+  <p id="finalScore">Счёт: 0</p>
+
+  <button id="restartButton">🔄 ЕЩЁ РАЗ</button>
+
+</div>
+
+<div id="winScreen" class="hidden">
+
+  <h1>🏆 ПОБЕДА!</h1>
+
+  <p>Ты прошёл Monster Island!</p>
+
+  <p id="winScore">⭐ Счёт: 0</p>
+
+  <button id="playAgainButton">🎮 ИГРАТЬ СНОВА</button>
+
+</div>
 
 </div>
 
 <script>
 
-const player = document.getElementById("player");
+const canvas = document.getElementById("canvas");
 
-const jumpButton = document.getElementById("jump");
+const ctx = canvas.getContext("2d");
 
-const scoreText = document.getElementById("score");
+let W = window.innerWidth;
 
-let jumping = false;
+let H = window.innerHeight;
+
+canvas.width = W;
+
+canvas.height = H;
+
+window.addEventListener("resize", () => {
+
+  W = window.innerWidth;
+
+  H = window.innerHeight;
+
+  canvas.width = W;
+
+  canvas.height = H;
+
+});
+
+const menu = document.getElementById("menu");
+
+const hud = document.getElementById("hud");
+
+const controls = document.getElementById("controls");
+
+const gameOver = document.getElementById("gameOver");
+
+const winScreen = document.getElementById("winScreen");
+
+const scoreText = document.getElementById("scoreText");
+
+const livesText = document.getElementById("livesText");
+
+const levelText = document.getElementById("levelText");
+
+let gameRunning = false;
+
+let level = 1;
 
 let score = 0;
 
+let lives = 3;
+
+let cameraX = 0;
+
+const keys = {
+
+  left: false,
+
+  right: false
+
+};
+
+const player = {
+
+  x: 100,
+
+  y: 300,
+
+  w: 38,
+
+  h: 48,
+
+  vx: 0,
+
+  vy: 0,
+
+  speed: 5,
+
+  jump: -13,
+
+  grounded: false,
+
+  color: "#ffd21f"
+
+};
+
+let platforms = [];
+
+let coins = [];
+
+let monsters = [];
+
+let goal = null;
+
+const levels = [
+
+  {
+
+    width: 2600,
+
+    platforms: [
+
+      [0,500,500,50],
+
+      [600,430,300,40],
+
+      [1000,520,450,50],
+
+      [1530,410,300,40],
+
+      [1900,500,700,50],
+
+      [850,300,180,30],
+
+      [1300,260,180,30],
+
+      [1700,300,160,30]
+
+    ],
+
+    coins: [
+
+      [250,450],
+
+      [700,380],
+
+      [850,250],
+
+      [1150,470],
+
+      [1380,210],
+
+      [1600,360],
+
+      [1750,250],
+
+      [2100,450],
+
+      [2350,450]
+
+    ],
+
+    monsters: [
+
+      [700,380,35,40,2],
+
+      [1200,470,35,40,2],
+
+      [2000,450,35,40,2]
+
+    ],
+
+    goal: [2450,430]
+
+  },
+
+  {
+
+    width: 3200,
+
+    platforms: [
+
+      [0,500,450,50],
+
+      [520,420,250,40],
+
+      [850,340,250,40],
+
+      [1180,480,350,50],
+
+      [1600,390,250,40],
+
+      [1920,300,220,40],
+
+      [2220,450,400,50],
+
+      [2700,350,250,40],
+
+      [3000,500,200,50],
+
+      [1450,250,150,30],
+
+      [2350,250,150,30]
+
+    ],
+
+    coins: [
+
+      [200,450],
+
+      [600,370],
+
+      [950,290],
+
+      [1300,430],
+
+      [1700,340],
+
+      [2000,250],
+
+      [2300,400],
+
+      [2420,200],
+
+      [2800,300],
+
+      [3100,450]
+
+    ],
+
+    monsters: [
+
+      [600,370,35,40,2],
+
+      [1280,430,35,40,2],
+
+      [1700,340,35,40,2],
+
+      [2300,400,35,40,2],
+
+      [2800,300,35,40,2]
+
+    ],
+
+    goal: [3100,430]
+
+  },
+
+  {
+
+    width: 3900,
+
+    platforms: [
+
+      [0,500,400,50],
+
+      [470,400,230,40],
+
+      [760,300,200,40],
+
+      [1020,450,300,50],
+
+      [1380,350,220,40],
+
+      [1670,250,200,40],
+
+      [1930,450,350,50],
+
+      [2350,350,220,40],
+
+      [2620,250,180,40],
+
+      [2880,450,350,50],
+
+      [3300,350,220,40],
+
+      [3570,250,180,40],
+
+      [3800,500,150,50]
+
+    ],
+
+    coins: [
+
+      [180,450],
+
+      [550,350],
+
+      [840,250],
+
+      [1120,400],
+
+      [1450,300],
+
+      [1740,200],
+
+      [2050,400],
+
+      [2420,300],
+
+      [2690,200],
+
+      [3000,400],
+
+      [3370,300],
+
+      [3650,200],
+
+      [3860,450]
+
+    ],
+
+    monsters: [
+
+      [550,350,35,40,2],
+
+      [1100,400,35,40,2],
+
+      [1450,300,35,40,2],
+
+      [2050,400,35,40,2],
+
+      [2420,300,35,40,2],
+
+      [3000,400,35,40,2],
+
+      [3370,300,35,40,2]
+
+    ],
+
+    goal: [3860,430]
+
+  }
+
+];
+
+function loadLevel(n) {
+
+  const data = levels[n - 1];
+
+  platforms = data.platforms.map(p => ({
+
+    x:p[0],
+
+    y:p[1],
+
+    w:p[2],
+
+    h:p[3]
+
+  }));
+
+  coins = data.coins.map(c => ({
+
+    x:c[0],
+
+    y:c[1],
+
+    r:12,
+
+    collected:false
+
+  }));
+
+  monsters = data.monsters.map(m => ({
+
+    x:m[0],
+
+    y:m[1],
+
+    w:m[2],
+
+    h:m[3],
+
+    minX:m[0]-80,
+
+    maxX:m[0]+80,
+
+    vx:m[4],
+
+    alive:true
+
+  }));
+
+  goal = {
+
+    x:data.goal[0],
+
+    y:data.goal[1],
+
+    w:35,
+
+    h:70
+
+  };
+
+  player.x = 80;
+
+  player.y = 400;
+
+  player.vx = 0;
+
+  player.vy = 0;
+
+  cameraX = 0;
+
+  levelText.textContent = "🏝️ Level " + level;
+
+}
+
+function startGame() {
+
+  menu.classList.add("hidden");
+
+  gameOver.classList.add("hidden");
+
+  winScreen.classList.add("hidden");
+
+  hud.classList.remove("hidden");
+
+  controls.classList.remove("hidden");
+
+  level = 1;
+
+  score = 0;
+
+  lives = 3;
+
+  loadLevel(level);
+
+  gameRunning = true;
+
+  updateHUD();
+
+  requestAnimationFrame(gameLoop);
+
+}
+
+function updateHUD() {
+
+  scoreText.textContent = "⭐ " + score;
+
+  livesText.textContent =
+
+    "❤️".repeat(lives) +
+
+    "🖤".repeat(3 - lives);
+
+}
+
+function rectsOverlap(a,b) {
+
+  return (
+
+    a.x < b.x + b.w &&
+
+    a.x + a.w > b.x &&
+
+    a.y < b.y + b.h &&
+
+    a.y + a.h > b.y
+
+  );
+
+}
+
 function jump() {
 
-  if (jumping) return;
+  if (!gameRunning) return;
 
-  jumping = true;
+  if (player.grounded) {
 
-  let start = null;
+    player.vy = player.jump;
 
-  function animate(time) {
+    player.grounded = false;
 
-    if (!start) start = time;
+  }
 
-    let t = (time - start) / 700;
+}
 
-    if (t < 1) {
+function hurt() {
 
-      let height = Math.sin(t * Math.PI) * 180;
+  lives--;
 
-      player.style.transform = `translateY(${-height}px)`;
+  updateHUD();
 
-      requestAnimationFrame(animate);
+  if (lives <= 0) {
 
-    } else {
+    gameRunning = false;
 
-      player.style.transform = "translateY(0)";
+    controls.classList.add("hidden");
 
-      jumping = false;
+    hud.classList.add("hidden");
 
-      score++;
+    gameOver.classList.remove("hidden");
 
-      scoreText.textContent = "⭐ " + score;
+    document.getElementById("finalScore").textContent =
+
+      "⭐ Счёт: " + score;
+
+    return;
+
+  }
+
+  player.x = 80;
+
+  player.y = 300;
+
+  player.vx = 0;
+
+  player.vy = 0;
+
+}
+
+function update() {
+
+  if (!gameRunning) return;
+
+  if (keys.left) {
+
+    player.vx = -player.speed;
+
+  }
+
+  else if (keys.right) {
+
+    player.vx = player.speed;
+
+  }
+
+  else {
+
+    player.vx *= 0.8;
+
+  }
+
+  player.vy += 0.6;
+
+  if (player.vy > 15) {
+
+    player.vy = 15;
+
+  }
+
+  player.x += player.vx;
+
+  player.y += player.vy;
+
+  if (player.x < 0) {
+
+    player.x = 0;
+
+  }
+
+  const worldWidth = levels[level - 1].width;
+
+  if (player.x + player.w > worldWidth) {
+
+    player.x = worldWidth - player.w;
+
+  }
+
+  player.grounded = false;
+
+  for (const p of platforms) {
+
+    if (
+
+      player.x + player.w > p.x &&
+
+      player.x < p.x + p.w &&
+
+      player.y + player.h > p.y &&
+
+      player.y + player.h < p.y + p.h + 15 &&
+
+      player.vy >= 0
+
+    ) {
+
+      player.y = p.y - player.h;
+
+      player.vy = 0;
+
+      player.grounded = true;
 
     }
 
   }
 
-  requestAnimationFrame(animate);
+  for (const c of coins) {
+
+    if (c.collected) continue;
+
+    const dx =
+
+      player.x + player.w/2 - c.x;
+
+    const dy =
+
+      player.y + player.h/2 - c.y;
+
+    const distance = Math.sqrt(dx*dx + dy*dy);
+
+    if (distance < 35) {
+
+      c.collected = true;
+
+      score += 10;
+
+      updateHUD();
+
+    }
+
+  }
+
+  for (const m of monsters) {
+
+    if (!m.alive) continue;
+
+    m.x += m.vx;
+
+    if (m.x < m.minX || m.x > m.maxX) {
+
+      m.vx *= -1;
+
+    }
+
+    if (rectsOverlap(player,m)) {
+
+      if (player.vy > 0 && player.y + player.h < m.y + 25) {
+
+        m.alive = false;
+
+        player.vy = -9;
+
+        score += 25;
+
+        updateHUD();
+
+      }
+
+      else {
+
+        hurt();
+
+        return;
+
+      }
+
+    }
+
+  }
+
+  if (goal && rectsOverlap(player,goal)) {
+
+    if (level < levels.length) {
+
+      level++;
+
+      score += 100;
+
+      loadLevel(level);
+
+      updateHUD();
+
+    }
+
+    else {
+
+      gameRunning = false;
+
+      controls.classList.add("hidden");
+
+      hud.classList.add("hidden");
+
+      winScreen.classList.remove("hidden");
+
+      document.getElementById("winScore").textContent =
+
+        "⭐ Счёт: " + score;
+
+    }
+
+  }
+
+  if (player.y > H + 200) {
+
+    hurt();
+
+  }
+
+  cameraX =
+
+    player.x - W * 0.35;
+
+  if (cameraX < 0) {
+
+    cameraX = 0;
+
+  }
+
+  const maxCamera =
+
+    worldWidth - W;
+
+  if (cameraX > maxCamera) {
+
+    cameraX = Math.max(0,maxCamera);
+
+  }
 
 }
 
-jumpButton.addEventListener("touchstart", jump);
+function drawBackground() {
 
-jumpButton.addEventListener("click", jump);
+  const gradient =
+
+    ctx.createLinearGradient(0,0,0,H);
+
+  gradient.addColorStop(0,"#55c8ff");
+
+  gradient.addColorStop(1,"#b8f5ff");
+
+  ctx.fillStyle = gradient;
+
+  ctx.fillRect(0,0,W,H);
+
+  ctx.fillStyle = "rgba(255,255,255,.8)";
+
+  for (let i=0;i<6;i++) {
+
+    const x =
+
+      i*450 - cameraX*0.2;
+
+    ctx.beginPath();
+
+    ctx.arc(x,100,35,0,Math.PI*2);
+
+    ctx.arc(x+40,100,45,0,Math.PI*2);
+
+    ctx.arc(x+80,100,30,0,Math.PI*2);
+
+    ctx.fill();
+
+  }
+
+}
+
+function drawPlatforms() {
+
+  for (const p of platforms) {
+
+    ctx.fillStyle = "#38a852";
+
+    ctx.fillRect(
+
+      p.x-cameraX,
+
+      p.y,
+
+      p.w,
+
+      p.h
+
+    );
+
+    ctx.fillStyle = "#237c3a";
+
+    ctx.fillRect(
+
+      p.x-cameraX,
+
+      p.y+p.h-10,
+
+      p.w,
+
+      10
+
+    );
+
+  }
+
+}
+
+function drawCoins() {
+
+  for (const c of coins) {
+
+    if (c.collected) continue;
+
+    ctx.fillStyle = "#ffd21f";
+
+    ctx.beginPath();
+
+    ctx.arc(
+
+      c.x-cameraX,
+
+      c.y,
+
+      c.r,
+
+      0,
+
+      Math.PI*2
+
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle = "#fff3a3";
+
+    ctx.font = "bold 14px Arial";
+
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+
+      "$",
+
+      c.x-cameraX,
+
+      c.y+5
+
+    );
+
+  }
+
+}
+
+function drawMonsters() {
+
+  for (const m of monsters) {
+
+    if (!m.alive) continue;
+
+    const x = m.x-cameraX;
+
+    ctx.fillStyle = "#8e44ad";
+
+    ctx.fillRect(
+
+      x,
+
+      m.y,
+
+      m.w,
+
+      m.h
+
+    );
+
+    ctx.fillStyle = "white";
+
+    ctx.beginPath();
+
+    ctx.arc(x+10,m.y+12,7,0,Math.PI*2);
+
+    ctx.arc(x+25,m.y+12,7,0,Math.PI*2);
+
+    ctx.fill();
+
+    ctx.fillStyle = "black";
+
+    ctx.beginPath();
+
+    ctx.arc(x+10,m.y+12,3,0,Math.PI*2);
+
+    ctx.arc(x+25,m.y+12,3,0,Math.PI*2);
+
+    ctx.fill();
+
+    ctx.fillStyle = "#ff5252";
+
+    ctx.fillRect(
+
+      x+8,
+
+      m.y+27,
+
+      20,
+
+      5
+
+    );
+
+  }
+
+}
+
+function drawGoal() {
+
+  if (!goal) return;
+
+  const x = goal.x-cameraX;
+
+  ctx.fillStyle = "#795548";
+
+  ctx.fillRect(
+
+    x,
+
+    goal.y,
+
+    6,
+
+    goal.h
+
+  );
+
+  ctx.fillStyle = "#ff4757";
+
+  ctx.beginPath();
+
+  ctx.moveTo(x+6,goal.y);
+
+  ctx.lineTo(x+45,goal.y+15);
+
+  ctx.lineTo(x+6,goal.y+30);
+
+  ctx.closePath();
+
+  ctx.fill();
+
+}
+
+function drawPlayer() {
+
+  const x = player.x-cameraX;
+
+  ctx.fillStyle = player.color;
+
+  ctx.beginPath();
+
+  ctx.arc(
+
+    x+player.w/2,
+
+    player.y+player.h/2,
+
+    20,
+
+    0,
+
+    Math.PI*2
+
+  );
+
+  ctx.fill();
+
+  ctx.fillStyle = "#222";
+
+  ctx.beginPath();
+
+  ctx.arc(
+
+    x+13,
+
+    player.y+18,
+
+    3,
+
+    0,
+
+    Math.PI*2
+
+  );
+
+  ctx.arc(
+
+    x+26,
+
+    player.y+18,
+
+    3,
+
+    0,
+
+    Math.PI*2
+
+  );
+
+  ctx.fill();
+
+}
+
+function draw() {
+
+  drawBackground();
+
+  drawPlatforms();
+
+  drawCoins();
+
+  drawMonsters();
+
+  drawGoal();
+
+  drawPlayer();
+
+}
+
+function gameLoop() {
+
+  if (!gameRunning) return;
+
+  update();
+
+  draw();
+
+  requestAnimationFrame(gameLoop);
+
+}
+
+function holdButton(element, property) {
+
+  element.addEventListener("touchstart",
+
+    e => {
+
+      e.preventDefault();
+
+      keys[property] = true;
+
+    },
+
+    {passive:false}
+
+  );
+
+  element.addEventListener("touchend",
+
+    e => {
+
+      e.preventDefault();
+
+      keys[property] = false;
+
+    },
+
+    {passive:false}
+
+  );
+
+  element.addEventListener("touchcancel",
+
+    () => {
+
+      keys[property] = false;
+
+    }
+
+  );
+
+  element.addEventListener("mousedown",
+
+    () => {
+
+      keys[property] = true;
+
+    }
+
+  );
+
+  element.addEventListener("mouseup",
+
+    () => {
+
+      keys[property] = false;
+
+    }
+
+  );
+
+}
+
+holdButton(
+
+  document.getElementById("left"),
+
+  "left"
+
+);
+
+holdButton(
+
+  document.getElementById("right"),
+
+  "right"
+
+);
+
+document.getElementById("jump")
+
+.addEventListener("touchstart", e => {
+
+  e.preventDefault();
+
+  jump();
+
+},{passive:false});
+
+document.getElementById("jump")
+
+.addEventListener("click", jump);
 
 document.addEventListener("keydown", e => {
 
-  if (e.code === "Space") {
+  if (e.code === "ArrowLeft" || e.code === "KeyA") {
+
+    keys.left = true;
+
+  }
+
+  if (e.code === "ArrowRight" || e.code === "KeyD") {
+
+    keys.right = true;
+
+  }
+
+  if (
+
+    e.code === "Space" ||
+
+    e.code === "ArrowUp" ||
+
+    e.code === "KeyW"
+
+  ) {
+
+    e.preventDefault();
 
     jump();
 
   }
 
 });
+
+document.addEventListener("keyup", e => {
+
+  if (e.code === "ArrowLeft" || e.code === "KeyA") {
+
+    keys.left = false;
+
+  }
+
+  if (e.code === "ArrowRight" || e.code === "KeyD") {
+
+    keys.right = false;
+
+  }
+
+});
+
+document.getElementById("startButton")
+
+.addEventListener("click", startGame);
+
+document.getElementById("restartButton")
+
+.addEventListener("click", startGame);
+
+document.getElementById("playAgainButton")
+
+.addEventListener("click", startGame);
+
+drawBackground();
 
 </script>
 
