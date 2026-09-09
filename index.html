@@ -1,1 +1,331 @@
-index.html.
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jump Quest Monster Island</title>
+
+<style>
+
+* {
+
+  box-sizing: border-box;
+
+}
+
+body {
+
+  margin: 0;
+
+  overflow: hidden;
+
+  background: linear-gradient(#55c8ff, #b8f0ff);
+
+  font-family: Arial, sans-serif;
+
+  touch-action: none;
+
+}
+
+#game {
+
+  position: relative;
+
+  width: 100vw;
+
+  height: 100vh;
+
+  overflow: hidden;
+
+}
+
+#player {
+
+  position: absolute;
+
+  width: 50px;
+
+  height: 50px;
+
+  background: #ffcc33;
+
+  border: 4px solid #222;
+
+  border-radius: 50%;
+
+  left: 80px;
+
+  bottom: 120px;
+
+  z-index: 5;
+
+}
+
+.platform {
+
+  position: absolute;
+
+  height: 25px;
+
+  background: #38a852;
+
+  border: 4px solid #185c2a;
+
+  border-radius: 12px;
+
+}
+
+#platform1 {
+
+  width: 180px;
+
+  left: 20px;
+
+  bottom: 80px;
+
+}
+
+#platform2 {
+
+  width: 150px;
+
+  left: 260px;
+
+  bottom: 190px;
+
+}
+
+#platform3 {
+
+  width: 170px;
+
+  left: 500px;
+
+  bottom: 300px;
+
+}
+
+.monster {
+
+  position: absolute;
+
+  width: 55px;
+
+  height: 55px;
+
+  background: #9b59ff;
+
+  border: 4px solid #35145e;
+
+  border-radius: 40% 40% 50% 50%;
+
+  bottom: 105px;
+
+  left: 430px;
+
+}
+
+.eye {
+
+  position: absolute;
+
+  width: 12px;
+
+  height: 12px;
+
+  background: white;
+
+  border: 2px solid #111;
+
+  border-radius: 50%;
+
+  top: 12px;
+
+}
+
+.eye.left {
+
+  left: 10px;
+
+}
+
+.eye.right {
+
+  right: 10px;
+
+}
+
+#score {
+
+  position: absolute;
+
+  top: 20px;
+
+  left: 20px;
+
+  font-size: 24px;
+
+  font-weight: bold;
+
+  color: white;
+
+  text-shadow: 2px 2px #222;
+
+  z-index: 10;
+
+}
+
+#message {
+
+  position: absolute;
+
+  top: 55px;
+
+  left: 20px;
+
+  font-size: 18px;
+
+  color: white;
+
+  text-shadow: 2px 2px #222;
+
+  z-index: 10;
+
+}
+
+#jump {
+
+  position: absolute;
+
+  right: 25px;
+
+  bottom: 30px;
+
+  width: 100px;
+
+  height: 100px;
+
+  border-radius: 50%;
+
+  border: 5px solid white;
+
+  background: #ff7043;
+
+  color: white;
+
+  font-size: 22px;
+
+  font-weight: bold;
+
+  z-index: 20;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="game">
+
+  <div id="score">⭐ 0</div>
+
+  <div id="message">Прыгай и собирай монеты!</div>
+
+  <div id="player"></div>
+
+  <div id="platform1" class="platform"></div>
+
+  <div id="platform2" class="platform"></div>
+
+  <div id="platform3" class="platform"></div>
+
+  <div class="monster">
+
+    <div class="eye left"></div>
+
+    <div class="eye right"></div>
+
+  </div>
+
+  <button id="jump">JUMP</button>
+
+</div>
+
+<script>
+
+const player = document.getElementById("player");
+
+const jumpButton = document.getElementById("jump");
+
+const scoreText = document.getElementById("score");
+
+let jumping = false;
+
+let score = 0;
+
+function jump() {
+
+  if (jumping) return;
+
+  jumping = true;
+
+  let start = null;
+
+  function animate(time) {
+
+    if (!start) start = time;
+
+    let t = (time - start) / 700;
+
+    if (t < 1) {
+
+      let height = Math.sin(t * Math.PI) * 180;
+
+      player.style.transform = `translateY(${-height}px)`;
+
+      requestAnimationFrame(animate);
+
+    } else {
+
+      player.style.transform = "translateY(0)";
+
+      jumping = false;
+
+      score++;
+
+      scoreText.textContent = "⭐ " + score;
+
+    }
+
+  }
+
+  requestAnimationFrame(animate);
+
+}
+
+jumpButton.addEventListener("touchstart", jump);
+
+jumpButton.addEventListener("click", jump);
+
+document.addEventListener("keydown", e => {
+
+  if (e.code === "Space") {
+
+    jump();
+
+  }
+
+});
+
+</script>
+
+</body>
+
+</html>
